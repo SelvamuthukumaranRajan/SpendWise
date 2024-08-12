@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spend_wise/utils/routes/routes_names.dart';
+import 'package:spend_wise/views/summary_screen.dart';
 
 import '../../views/auth_screen.dart';
 import '../../views/home_screen.dart';
@@ -17,9 +18,10 @@ class Routes {
       case (RouteNames.homeScreen):
         return MaterialPageRoute(
             builder: (BuildContext context) => const HomeScreen());
-      case (RouteNames.addExpenseScreen):
+      case (RouteNames.summaryScreen):
         return MaterialPageRoute(
-            builder: (BuildContext context) => const HomeScreen());
+            builder: (BuildContext context) => const SummaryScreen(),
+            settings: settings);
 
       default:
         return MaterialPageRoute(

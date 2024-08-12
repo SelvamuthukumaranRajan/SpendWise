@@ -1,25 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:spend_wise/data/models/auth_user_model.dart';
+import 'package:spend_wise/data/repositories/transaction_repository.dart';
+import 'package:spend_wise/utils/auth_helper.dart';
 import 'package:spend_wise/utils/configs/app_theme.dart';
 
-class AddExpenseSheet extends StatefulWidget {
+import '../data/models/user_model.dart';
+import '../utils/routes/routes_names.dart';
+
+class AuthSignupSheet extends StatefulWidget {
   final ThemeData theme;
 
-  const AddExpenseSheet({super.key, required this.theme});
+  const AuthSignupSheet({super.key, required this.theme});
 
   @override
-  State<AddExpenseSheet> createState() => _AddExpenseSheetState();
+  State<AuthSignupSheet> createState() => _AuthSignupSheetState();
 }
 
-class _AddExpenseSheetState extends State<AddExpenseSheet> {
+class _AuthSignupSheetState extends State<AuthSignupSheet> {
   final _formKey = GlobalKey<FormState>();
-  final _titleController = TextEditingController();
-  final _descController = TextEditingController();
-
-  final List<String> _categories = ['Food', 'Travel', 'Bills', 'Shopping'];
-  String? _selectedCategory;
-  final _categoryController = TextEditingController();
-
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
   final _amountController = TextEditingController();
+  final authHelper = AuthHelper();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +46,9 @@ class _AddExpenseSheetState extends State<AddExpenseSheet> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Add Expense',
-                  style: widget.theme.textTheme.homeLabelBold.copyWith(
+                  'Signup',
+                  style:
+                      widget.theme.textTheme.transactionSheetLabelBold.copyWith(
                     color: widget.theme.colorScheme.textColor(),
                   ),
                 ),
@@ -47,7 +56,7 @@ class _AddExpenseSheetState extends State<AddExpenseSheet> {
                   icon: Icon(Icons.close_rounded,
                       color: widget.theme.colorScheme.textColor(), size: 24),
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.pop(context, false);
                   },
                 ),
               ],
@@ -59,61 +68,48 @@ class _AddExpenseSheetState extends State<AddExpenseSheet> {
             child: Column(
               children: [
                 TextFormField(
-                  controller: _titleController,
+                  controller: _nameController,
                   decoration: InputDecoration(
-                    labelText: 'Title',
+                    labelText: 'Name',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15.0),
                     ),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter title';
+                      return 'Please enter name';
                     }
                     return null;
                   },
                 ),
                 const SizedBox(height: 16.0),
                 TextFormField(
-                  controller: _descController,
+                  controller: _emailController,
                   decoration: InputDecoration(
-                    labelText: 'Description',
+                    labelText: 'Email',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15.0),
                     ),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter description';
+                      return 'Please enter email';
                     }
                     return null;
                   },
                 ),
                 const SizedBox(height: 16.0),
-                DropdownButtonFormField<String>(
-                  value: _selectedCategory,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      _selectedCategory = newValue!;
-                      _categoryController.text = newValue;
-                    });
-                  },
-                  items:
-                      _categories.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
+                TextFormField(
+                  controller: _passwordController,
                   decoration: InputDecoration(
-                    labelText: 'Category',
+                    labelText: 'Password',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15.0),
                     ),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please select a category';
+                      return 'Please enter password';
                     }
                     return null;
                   },
@@ -122,29 +118,46 @@ class _AddExpenseSheetState extends State<AddExpenseSheet> {
                 TextFormField(
                   controller: _amountController,
                   decoration: InputDecoration(
-                    labelText: 'Amount',
+                    labelText: 'Balance',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15.0),
                     ),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter amount';
+                      return 'Please enter your current balance';
                     }
                     return null;
                   },
                 ),
                 const SizedBox(height: 32.0),
                 MaterialButton(
-                  onPressed: () {
+                  splashColor: Colors.transparent,
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      // Process the form data
-                      Navigator.pop(context, {
-                        'title': _titleController.text,
-                        'description': _descController.text,
-                        'category': _categoryController.text,
-                        'amount': _amountController.text,
-                      });
+                      final user =
+                          await authHelper.registerWithEmailAndPassword(
+                              _emailController.text, _passwordController.text);
+                      if (user != null) {
+                        authHelper.createUser(AuthUserModel(
+                            uid: user.uid,
+                            name: _nameController.text,
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                            balance: double.parse(_amountController.text)));
+                        TransactionRepository().login(UserModel(
+                            _nameController.text,
+                            _emailController.text,
+                            double.parse(_amountController.text)));
+                        if (mounted) {
+                          Navigator.pop(context, true);
+                        }
+                      }
+                      else{
+                        if (mounted) {
+                          Navigator.pop(context, false);
+                        }
+                      }
                     }
                   },
                   child: Container(
@@ -155,7 +168,7 @@ class _AddExpenseSheetState extends State<AddExpenseSheet> {
                     padding: const EdgeInsets.symmetric(
                         vertical: 12, horizontal: 48),
                     child: Text(
-                      'Add',
+                      'Signup',
                       style: widget.theme.textTheme.statsLabelBold.copyWith(
                         color: widget.theme.colorScheme.textColor(),
                       ),

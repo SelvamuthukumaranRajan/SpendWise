@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:spend_wise/utils/configs/app_theme.dart';
+import 'package:spend_wise/views/summary_screen.dart';
+
+import '../utils/routes/routes_names.dart';
+import '../viewModels/summary_view_model.dart';
 
 class TopSpendingItem extends StatelessWidget {
   final ThemeData theme;
@@ -16,8 +21,10 @@ class TopSpendingItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         print("$title Tapped");
+        Navigator.pushNamed(context, RouteNames.summaryScreen,
+            arguments: title);
       },
       child: Container(
         decoration: BoxDecoration(

@@ -89,6 +89,43 @@ extension HexColor on Color {
 }
 
 extension CustomText on TextTheme {
+  //Splash screen styles
+  TextStyle get splashLabel => const TextStyle(
+    fontFamily: 'Poppins',
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w900,
+    fontSize: 48,
+  );
+
+  //Auth screen styles
+  TextStyle get authLabelBold => const TextStyle(
+    fontFamily: 'Poppins',
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w900,
+    fontSize: 36,
+  );
+
+  TextStyle get authLabel => const TextStyle(
+    fontFamily: 'Poppins',
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w600,
+    fontSize: 20,
+  );
+
+  TextStyle get authLoginLabel => const TextStyle(
+    fontFamily: 'Poppins',
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w500,
+    fontSize: 16,
+  );
+
+  TextStyle get authButtonLabel => const TextStyle(
+    fontFamily: 'Poppins',
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w600,
+    fontSize: 24,
+  );
+
   //Home screen styles
   TextStyle get greetingsBold => const TextStyle(
         fontFamily: 'Poppins',
@@ -169,14 +206,43 @@ extension CustomText on TextTheme {
         fontWeight: FontWeight.w800,
         fontSize: 16,
       );
+
+  //Add Transaction Sheet Style
+  TextStyle get transactionSheetLabelBold => const TextStyle(
+    fontFamily: 'Poppins',
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w800,
+    fontSize: 18,
+  );
+
+  TextStyle get transactionSheetLabel => const TextStyle(
+    fontFamily: 'Poppins',
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w400,
+    fontSize: 14,
+  );
+
+  //SummaryScreen Style
+  TextStyle get summaryLabelBold => const TextStyle(
+    fontFamily: 'Poppins',
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w700,
+    fontSize: 18,
+  );
+  TextStyle get summaryLabel => const TextStyle(
+    fontFamily: 'Poppins',
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w400,
+    fontSize: 16,
+  );
 }
 
 extension CustomColorScheme on ColorScheme {
-  Color get primaryColor => brightness != Brightness.dark
+  Color get primaryColor => brightness == Brightness.dark
       ? AppColors.primaryDark.fromHex
       : AppColors.primaryLight.fromHex;
 
-  Color get secondaryColor => brightness != Brightness.dark
+  Color get secondaryColor => brightness == Brightness.dark
       ? AppColors.secondaryDark.fromHex
       : AppColors.secondaryLight.fromHex;
 

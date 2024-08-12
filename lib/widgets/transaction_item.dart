@@ -44,7 +44,7 @@ class TransactionItem extends StatelessWidget {
           ),
         ),
         trailing: Text(
-          amount,
+          '₹ $amount',
           style: theme.textTheme.transactionPriceLabel.copyWith(
             color: isExpense ? theme.colorScheme.expenseColor : theme.colorScheme.incomeColor,
           ),

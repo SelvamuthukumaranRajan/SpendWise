@@ -15,7 +15,8 @@ class StatsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double progress = int.parse(expense) / int.parse(balance);
+    double progress =
+        double.parse(expense).round() / double.parse(balance).round();
     if (progress < 0) {
       progress = 0;
     } else if (progress > 1) {
@@ -26,9 +27,6 @@ class StatsCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: theme.colorScheme.secondaryColor,
         borderRadius: BorderRadius.circular(20),
-        // gradient: const LinearGradient(
-        //   colors: [Colors.purpleAccent, Colors.blueAccent],
-        // ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

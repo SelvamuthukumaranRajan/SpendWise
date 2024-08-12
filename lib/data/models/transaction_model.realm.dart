@@ -1,19 +1,21 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'expense.dart';
+part of 'transaction_model.dart';
 
 // **************************************************************************
 // RealmObjectGenerator
 // **************************************************************************
 
 // ignore_for_file: type=lint
-class Expense extends _Expense with RealmEntity, RealmObjectBase, RealmObject {
-  Expense(
+class TransactionModel extends _TransactionModel
+    with RealmEntity, RealmObjectBase, RealmObject {
+  TransactionModel(
     int id,
     double amount,
     String title,
     String description,
     String category,
+    bool isExpense,
     DateTime date,
   ) {
     RealmObjectBase.set(this, 'id', id);
@@ -21,10 +23,11 @@ class Expense extends _Expense with RealmEntity, RealmObjectBase, RealmObject {
     RealmObjectBase.set(this, 'title', title);
     RealmObjectBase.set(this, 'description', description);
     RealmObjectBase.set(this, 'category', category);
+    RealmObjectBase.set(this, 'isExpense', isExpense);
     RealmObjectBase.set(this, 'date', date);
   }
 
-  Expense._();
+  TransactionModel._();
 
   @override
   int get id => RealmObjectBase.get<int>(this, 'id') as int;
@@ -55,20 +58,27 @@ class Expense extends _Expense with RealmEntity, RealmObjectBase, RealmObject {
   set category(String value) => RealmObjectBase.set(this, 'category', value);
 
   @override
+  bool get isExpense => RealmObjectBase.get<bool>(this, 'isExpense') as bool;
+  @override
+  set isExpense(bool value) => RealmObjectBase.set(this, 'isExpense', value);
+
+  @override
   DateTime get date => RealmObjectBase.get<DateTime>(this, 'date') as DateTime;
   @override
   set date(DateTime value) => RealmObjectBase.set(this, 'date', value);
 
   @override
-  Stream<RealmObjectChanges<Expense>> get changes =>
-      RealmObjectBase.getChanges<Expense>(this);
+  Stream<RealmObjectChanges<TransactionModel>> get changes =>
+      RealmObjectBase.getChanges<TransactionModel>(this);
 
   @override
-  Stream<RealmObjectChanges<Expense>> changesFor([List<String>? keyPaths]) =>
-      RealmObjectBase.getChangesFor<Expense>(this, keyPaths);
+  Stream<RealmObjectChanges<TransactionModel>> changesFor(
+          [List<String>? keyPaths]) =>
+      RealmObjectBase.getChangesFor<TransactionModel>(this, keyPaths);
 
   @override
-  Expense freeze() => RealmObjectBase.freezeObject<Expense>(this);
+  TransactionModel freeze() =>
+      RealmObjectBase.freezeObject<TransactionModel>(this);
 
   EJsonValue toEJson() {
     return <String, dynamic>{
@@ -77,12 +87,14 @@ class Expense extends _Expense with RealmEntity, RealmObjectBase, RealmObject {
       'title': title.toEJson(),
       'description': description.toEJson(),
       'category': category.toEJson(),
+      'isExpense': isExpense.toEJson(),
       'date': date.toEJson(),
     };
   }
 
-  static EJsonValue _toEJson(Expense value) => value.toEJson();
-  static Expense _fromEJson(EJsonValue ejson) {
+  static EJsonValue _toEJson(TransactionModel value) => value.toEJson();
+  static TransactionModel _fromEJson(EJsonValue ejson) {
+    if (ejson is! Map<String, dynamic>) return raiseInvalidEJson(ejson);
     return switch (ejson) {
       {
         'id': EJsonValue id,
@@ -90,14 +102,16 @@ class Expense extends _Expense with RealmEntity, RealmObjectBase, RealmObject {
         'title': EJsonValue title,
         'description': EJsonValue description,
         'category': EJsonValue category,
+        'isExpense': EJsonValue isExpense,
         'date': EJsonValue date,
       } =>
-        Expense(
+        TransactionModel(
           fromEJson(id),
           fromEJson(amount),
           fromEJson(title),
           fromEJson(description),
           fromEJson(category),
+          fromEJson(isExpense),
           fromEJson(date),
         ),
       _ => raiseInvalidEJson(ejson),
@@ -105,14 +119,16 @@ class Expense extends _Expense with RealmEntity, RealmObjectBase, RealmObject {
   }
 
   static final schema = () {
-    RealmObjectBase.registerFactory(Expense._);
+    RealmObjectBase.registerFactory(TransactionModel._);
     register(_toEJson, _fromEJson);
-    return SchemaObject(ObjectType.realmObject, Expense, 'Expense', [
+    return const SchemaObject(
+        ObjectType.realmObject, TransactionModel, 'TransactionModel', [
       SchemaProperty('id', RealmPropertyType.int, primaryKey: true),
       SchemaProperty('amount', RealmPropertyType.double),
       SchemaProperty('title', RealmPropertyType.string),
       SchemaProperty('description', RealmPropertyType.string),
       SchemaProperty('category', RealmPropertyType.string),
+      SchemaProperty('isExpense', RealmPropertyType.bool),
       SchemaProperty('date', RealmPropertyType.timestamp),
     ]);
   }();

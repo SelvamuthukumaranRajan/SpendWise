@@ -1,9 +1,9 @@
 import 'package:realm/realm.dart';
 
-part 'expense.realm.dart';
+part 'transaction_model.realm.dart';
 
 @RealmModel()
-class _Expense {
+class _TransactionModel {
   @PrimaryKey()
   late int id;
 
@@ -11,5 +11,6 @@ class _Expense {
   late String title;
   late String description;
   late String category;
+  late bool isExpense;
   late DateTime date;
 }

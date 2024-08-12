@@ -1,30 +1,43 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:spend_wise/repositories/expense_repository.dart';
 import 'package:spend_wise/utils/configs/app_theme.dart';
 import 'package:spend_wise/utils/notification_helper.dart';
 import 'package:spend_wise/utils/routes/routes.dart';
 import 'package:spend_wise/utils/routes/routes_names.dart';
 import 'package:spend_wise/viewModels/home_view_model.dart';
+import 'package:spend_wise/viewModels/summary_view_model.dart';
 import 'dart:io';
+
+import 'data/repositories/transaction_repository.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
-void main() {
-  initializeNotifications();
-  runApp(const MyApp());
-}
-
-void initializeNotifications() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  const AndroidInitializationSettings initializationSettingsAndroid =
+  try {
+    // Initialize Firebase
+    await Firebase.initializeApp();
+
+    // Initialize notifications
+    await initializeNotifications();
+
+    // Run the app
+    runApp(const MyApp());
+  } catch (e) {
+    print("Initialization Error: $e");
+  }
+}
+
+Future<void> initializeNotifications() async {
+  const AndroidInitializationSettings androidInitializationSettings =
       AndroidInitializationSettings('@mipmap/ic_launcher');
 
-  final DarwinInitializationSettings initializationSettingsIOS =
+  final DarwinInitializationSettings iOSInitializationSettings =
       DarwinInitializationSettings(
     requestAlertPermission: true,
     requestBadgePermission: true,
@@ -36,8 +49,8 @@ void initializeNotifications() async {
   );
 
   final InitializationSettings initializationSettings = InitializationSettings(
-    android: initializationSettingsAndroid,
-    iOS: initializationSettingsIOS,
+    android: androidInitializationSettings,
+    iOS: iOSInitializationSettings,
   );
 
   await flutterLocalNotificationsPlugin.initialize(
@@ -47,19 +60,28 @@ void initializeNotifications() async {
     },
   );
 
-  // Schedule the daily reminder notification
   final notificationHelper =
       NotificationHelper(flutterLocalNotificationsPlugin);
 
   if (Platform.isAndroid) {
-    notificationHelper.requestExactAlarmPermission();
-    if (await Permission.scheduleExactAlarm.isGranted) {
-      await notificationHelper.scheduleDailyReminderNotification();
-    }
+    await _handleAndroidNotification(notificationHelper);
   } else if (Platform.isIOS) {
-    notificationHelper.requestIOSPermissions();
+    await _handleIOSNotification(notificationHelper);
+  }
+}
+
+Future<void> _handleAndroidNotification(
+    NotificationHelper notificationHelper) async {
+  await notificationHelper.requestExactAlarmPermission();
+  if (await Permission.scheduleExactAlarm.isGranted) {
     await notificationHelper.scheduleDailyReminderNotification();
   }
+}
+
+Future<void> _handleIOSNotification(
+    NotificationHelper notificationHelper) async {
+  await notificationHelper.requestIOSPermissions();
+  await notificationHelper.scheduleDailyReminderNotification();
 }
 
 class MyApp extends StatelessWidget {
@@ -70,27 +92,20 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-            create: (_) => HomeViewModel(ExpenseRepository()))
-      ],
-      child: PopScope(
-        canPop: true, // Set this based on your logic
-        onPopInvoked: (didPop) {
-          if (didPop) {
-            // Handle the pop action
-            Navigator.pop(context);
-          } else {
-            // Handle the case where pop was blocked
-          }
-        },
-        child: MaterialApp(
-          title: 'Spend Wise',
-          debugShowCheckedModeBanner: false,
-          theme: AppTheme().buildLightTheme(),
-          darkTheme: AppTheme().buildDarkTheme(),
-          themeMode: ThemeMode.system,
-          initialRoute: RouteNames.splashScreen,
-          onGenerateRoute: Routes.generateRoutes,
+          create: (_) => HomeViewModel(TransactionRepository()),
         ),
+        ChangeNotifierProvider(
+          create: (_) => SummaryViewModel(TransactionRepository()),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Spend Wise',
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme().buildLightTheme(),
+        darkTheme: AppTheme().buildDarkTheme(),
+        themeMode: ThemeMode.system,
+        initialRoute: RouteNames.splashScreen,
+        onGenerateRoute: Routes.generateRoutes,
       ),
     );
   }

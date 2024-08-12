@@ -16,15 +16,20 @@ dependencies:
   provider: ^6.1.2
 
   #Local Storage:
-  realm: ^3.3.0
+  realm: ^3.4.0
 
   #Notification:
   flutter_local_notifications: ^17.2.2
   timezone: ^0.9.4
   permission_handler: ^11.3.1
 
-  #Formatting
-  intl: ^0.19.0
+  #Animation
+  lottie: ^3.1.2
+
+  #Authentication
+  firebase_core: ^3.3.0
+  firebase_auth: ^5.1.4
+  cloud_firestore: ^5.2.1
 
 
 dev_dependencies:
@@ -32,11 +37,226 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^4.0.0
+  #To generate Launcher Icon
+  flutter_launcher_icons: ^0.13.1
+  #Test
+  mockito: ^5.4.4
+  build_runner: ^2.1.11
+
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/app_icon.png"
+  android_adaptive_icon_background: "#FFFFFF"
+  android_adaptive_icon_foreground: "assets/icon/app_icon_foreground.png"
 
 flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/animation/splash_background.json
+    - ios/
+    - ios/Pods/
+    - ios/Pods/Headers/
+    - ios/Pods/Local Podspecs/
+    - ios/Pods/Pods.xcodeproj/
+    - ios/Pods/Pods.xcodeproj/xcuserdata/
+    - ios/Pods/Pods.xcodeproj/xcuserdata/selva.xcuserdatad/
+    - ios/Pods/Pods.xcodeproj/xcuserdata/selva.xcuserdatad/xcschemes/
+    - ios/Pods/Target Support Files/
+    - ios/Pods/Target Support Files/realm/
+    - ios/Pods/Target Support Files/Flutter/
+    - ios/Pods/Target Support Files/Pods-Runner/
+    - ios/Pods/Target Support Files/Pods-RunnerTests/
+    - ios/Pods/Target Support Files/permission_handler_apple/
+    - ios/Pods/Target Support Files/flutter_local_notifications/
+    - ios/Runner/
+    - ios/Runner/Base.lproj/
+    - ios/Runner/Assets.xcassets/
+    - ios/Runner/Assets.xcassets/AppIcon.appiconset/
+    - ios/Runner/Assets.xcassets/LaunchImage.imageset/
+    - ios/Flutter/
+    - ios/.symlinks/
+    - ios/.symlinks/plugins/
+    - ios/.symlinks/plugins/realm/
+    - ios/.symlinks/plugins/realm/bin/
+    - ios/.symlinks/plugins/realm/ios/
+    - ios/.symlinks/plugins/realm/ios/Classes/
+    - ios/.symlinks/plugins/realm/ios/Resources/
+    - ios/.symlinks/plugins/realm/ios/realm_dart.xcframework/
+    - ios/.symlinks/plugins/realm/ios/realm_dart.xcframework/ios-arm64/
+    - ios/.symlinks/plugins/realm/ios/realm_dart.xcframework/ios-arm64/realm_dart.framework/
+    - ios/.symlinks/plugins/realm/ios/realm_dart.xcframework/ios-arm64_x86_64-simulator/
+    - ios/.symlinks/plugins/realm/ios/realm_dart.xcframework/ios-arm64_x86_64-simulator/realm_dart.framework/
+    - ios/.symlinks/plugins/realm/lib/
+    - ios/.symlinks/plugins/realm/linux/
+    - ios/.symlinks/plugins/realm/linux/include/
+    - ios/.symlinks/plugins/realm/linux/include/realm/
+    - ios/.symlinks/plugins/realm/macos/
+    - ios/.symlinks/plugins/realm/macos/Classes/
+    - ios/.symlinks/plugins/realm/macos/Resources/
+    - ios/.symlinks/plugins/realm/android/
+    - ios/.symlinks/plugins/realm/android/src/
+    - ios/.symlinks/plugins/realm/android/src/gen/
+    - ios/.symlinks/plugins/realm/android/src/main/
+    - ios/.symlinks/plugins/realm/android/src/main/cpp/
+    - ios/.symlinks/plugins/realm/android/src/main/cpp/lib/
+    - ios/.symlinks/plugins/realm/android/src/main/cpp/lib/x86_64/
+    - ios/.symlinks/plugins/realm/android/src/main/cpp/lib/arm64-v8a/
+    - ios/.symlinks/plugins/realm/android/src/main/cpp/lib/armeabi-v7a/
+    - ios/.symlinks/plugins/realm/android/src/main/java/
+    - ios/.symlinks/plugins/realm/android/src/main/java/io/
+    - ios/.symlinks/plugins/realm/android/src/main/java/io/realm/
+    - ios/.symlinks/plugins/realm/android/gradle/
+    - ios/.symlinks/plugins/realm/android/gradle/wrapper/
+    - ios/.symlinks/plugins/realm/example/
+    - ios/.symlinks/plugins/realm/example/lib/
+    - ios/.symlinks/plugins/realm/windows/
+    - ios/.symlinks/plugins/realm/windows/include/
+    - ios/.symlinks/plugins/realm/windows/include/realm/
+    - ios/.symlinks/plugins/permission_handler_apple/
+    - ios/.symlinks/plugins/permission_handler_apple/ios/
+    - ios/.symlinks/plugins/permission_handler_apple/ios/Classes/
+    - ios/.symlinks/plugins/permission_handler_apple/ios/Classes/util/
+    - ios/.symlinks/plugins/permission_handler_apple/ios/Classes/strategies/
+    - ios/.symlinks/plugins/permission_handler_apple/ios/Resources/
+    - ios/.symlinks/plugins/permission_handler_apple/example/
+    - ios/.symlinks/plugins/permission_handler_apple/example/ios/
+    - ios/.symlinks/plugins/permission_handler_apple/example/ios/Runner/
+    - ios/.symlinks/plugins/permission_handler_apple/example/ios/Runner/Base.lproj/
+    - ios/.symlinks/plugins/permission_handler_apple/example/ios/Runner/Assets.xcassets/
+    - ios/.symlinks/plugins/permission_handler_apple/example/ios/Runner/Assets.xcassets/AppIcon.appiconset/
+    - ios/.symlinks/plugins/permission_handler_apple/example/ios/Runner/Assets.xcassets/LaunchImage.imageset/
+    - ios/.symlinks/plugins/permission_handler_apple/example/ios/Flutter/
+    - ios/.symlinks/plugins/permission_handler_apple/example/ios/Runner.xcodeproj/
+    - ios/.symlinks/plugins/permission_handler_apple/example/ios/Runner.xcodeproj/xcshareddata/
+    - ios/.symlinks/plugins/permission_handler_apple/example/ios/Runner.xcodeproj/xcshareddata/xcschemes/
+    - ios/.symlinks/plugins/permission_handler_apple/example/ios/Runner.xcodeproj/project.xcworkspace/
+    - ios/.symlinks/plugins/permission_handler_apple/example/ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/
+    - ios/.symlinks/plugins/permission_handler_apple/example/ios/Runner.xcworkspace/
+    - ios/.symlinks/plugins/permission_handler_apple/example/ios/Runner.xcworkspace/xcshareddata/
+    - ios/.symlinks/plugins/permission_handler_apple/example/lib/
+    - ios/.symlinks/plugins/permission_handler_apple/example/res/
+    - ios/.symlinks/plugins/permission_handler_apple/example/res/images/
+    - ios/.symlinks/plugins/flutter_local_notifications/
+    - ios/.symlinks/plugins/flutter_local_notifications/ios/
+    - ios/.symlinks/plugins/flutter_local_notifications/ios/Classes/
+    - ios/.symlinks/plugins/flutter_local_notifications/ios/Resources/
+    - ios/.symlinks/plugins/flutter_local_notifications/lib/
+    - ios/.symlinks/plugins/flutter_local_notifications/lib/src/
+    - ios/.symlinks/plugins/flutter_local_notifications/lib/src/platform_specifics/
+    - ios/.symlinks/plugins/flutter_local_notifications/lib/src/platform_specifics/ios/
+    - ios/.symlinks/plugins/flutter_local_notifications/lib/src/platform_specifics/darwin/
+    - ios/.symlinks/plugins/flutter_local_notifications/lib/src/platform_specifics/android/
+    - ios/.symlinks/plugins/flutter_local_notifications/lib/src/platform_specifics/android/styles/
+    - ios/.symlinks/plugins/flutter_local_notifications/test/
+    - ios/.symlinks/plugins/flutter_local_notifications/test/utils/
+    - ios/.symlinks/plugins/flutter_local_notifications/test/platform_specifics/
+    - ios/.symlinks/plugins/flutter_local_notifications/test/platform_specifics/darwin/
+    - ios/.symlinks/plugins/flutter_local_notifications/macos/
+    - ios/.symlinks/plugins/flutter_local_notifications/macos/Classes/
+    - ios/.symlinks/plugins/flutter_local_notifications/darwin/
+    - ios/.symlinks/plugins/flutter_local_notifications/darwin/Classes/
+    - ios/.symlinks/plugins/flutter_local_notifications/android/
+    - ios/.symlinks/plugins/flutter_local_notifications/android/src/
+    - ios/.symlinks/plugins/flutter_local_notifications/android/src/main/
+    - ios/.symlinks/plugins/flutter_local_notifications/android/src/main/java/
+    - ios/.symlinks/plugins/flutter_local_notifications/android/src/main/java/com/
+    - ios/.symlinks/plugins/flutter_local_notifications/android/src/main/java/com/dexterous/
+    - ios/.symlinks/plugins/flutter_local_notifications/android/src/main/java/com/dexterous/flutterlocalnotifications/
+    - ios/.symlinks/plugins/flutter_local_notifications/android/src/main/java/com/dexterous/flutterlocalnotifications/utils/
+    - ios/.symlinks/plugins/flutter_local_notifications/android/src/main/java/com/dexterous/flutterlocalnotifications/models/
+    - ios/.symlinks/plugins/flutter_local_notifications/android/src/main/java/com/dexterous/flutterlocalnotifications/models/styles/
+    - ios/.symlinks/plugins/flutter_local_notifications/android/src/main/java/com/dexterous/flutterlocalnotifications/isolate/
+    - ios/.symlinks/plugins/flutter_local_notifications/android/src/test/
+    - ios/.symlinks/plugins/flutter_local_notifications/android/src/test/java/
+    - ios/.symlinks/plugins/flutter_local_notifications/android/src/test/java/com/
+    - ios/.symlinks/plugins/flutter_local_notifications/android/src/test/java/com/dexterous/
+    - ios/.symlinks/plugins/flutter_local_notifications/android/src/test/java/com/dexterous/flutterlocalnotifications/
+    - ios/.symlinks/plugins/flutter_local_notifications/android/src/test/java/com/dexterous/flutterlocalnotifications/models/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/ios/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/ios/Runner/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/ios/Runner/Base.lproj/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/ios/Runner/Assets.xcassets/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/ios/Runner/Assets.xcassets/AppIcon.appiconset/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/ios/Runner/Assets.xcassets/LaunchImage.imageset/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/ios/Flutter/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/ios/RunnerTests/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/ios/Runner.xcodeproj/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/ios/Runner.xcodeproj/xcshareddata/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/ios/Runner.xcodeproj/xcshareddata/xcschemes/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/ios/Runner.xcodeproj/project.xcworkspace/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/ios/Runner.xcworkspace/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/ios/Runner.xcworkspace/xcshareddata/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/lib/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/icons/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/icons/1.5x/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/icons/2.0x/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/icons/3.0x/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/icons/4.0x/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/linux/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/linux/flutter/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/macos/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/macos/Runner/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/macos/Runner/Configs/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/macos/Runner/Base.lproj/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/macos/Runner/Assets.xcassets/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/macos/Runner/Assets.xcassets/AppIcon.appiconset/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/macos/Flutter/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/macos/RunnerTests/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/macos/Runner.xcodeproj/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/macos/Runner.xcodeproj/xcshareddata/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/macos/Runner.xcodeproj/xcshareddata/xcschemes/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/macos/Runner.xcodeproj/project.xcworkspace/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/macos/Runner.xcodeproj/project.xcworkspace/xcshareddata/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/macos/Runner.xcworkspace/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/macos/Runner.xcworkspace/xcshareddata/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/sound/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/android/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/android/app/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/android/app/src/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/android/app/src/main/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/android/app/src/main/res/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/android/app/src/main/res/raw/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/android/app/src/main/res/values/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/android/app/src/main/res/drawable/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/android/app/src/main/res/mipmap-hdpi/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/android/app/src/main/res/mipmap-mdpi/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/android/app/src/main/res/drawable-v21/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/android/app/src/main/res/mipmap-xhdpi/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/android/app/src/main/res/values-night/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/android/app/src/main/res/mipmap-xxhdpi/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/android/app/src/main/res/mipmap-xxxhdpi/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/android/app/src/main/kotlin/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/android/app/src/main/kotlin/com/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/android/app/src/main/kotlin/com/dexterous/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/android/app/src/main/kotlin/com/dexterous/flutter_local_notifications_example/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/android/app/src/debug/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/android/app/src/profile/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/android/app/src/androidTest/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/android/app/src/androidTest/java/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/android/app/src/androidTest/java/com/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/android/app/src/androidTest/java/com/dexterous/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/android/app/src/androidTest/java/com/dexterous/flutter_local_notifications_example/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/android/gradle/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/android/gradle/wrapper/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/test_driver/
+    - ios/.symlinks/plugins/flutter_local_notifications/example/integration_test/
+    - ios/RunnerTests/
+    - ios/Runner.xcodeproj/
+    - ios/Runner.xcodeproj/xcshareddata/
+    - ios/Runner.xcodeproj/xcshareddata/xcschemes/
+    - ios/Runner.xcodeproj/project.xcworkspace/
+    - ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/
+    - ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/
+    - ios/Runner.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/configuration/
+    - ios/Runner.xcworkspace/
+    - ios/Runner.xcworkspace/xcshareddata/
+    - ios/Runner.xcworkspace/xcshareddata/swiftpm/
+    - ios/Runner.xcworkspace/xcshareddata/swiftpm/configuration/
   fonts:
     - family: Poppins
       fonts:

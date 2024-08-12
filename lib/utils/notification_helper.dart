@@ -33,7 +33,7 @@ class NotificationHelper {
       0,
       'Record your expenses',
       'Don\'t forget to record your expenses today!',
-      _nextInstanceOfTime(00, 38), // Set the reminder for 8:00 PM
+      _nextInstanceOfTime(19, 00), // Set the reminder for 7:00 PM
       const NotificationDetails(
         android: AndroidNotificationDetails(
           'daily_reminder_channel',
