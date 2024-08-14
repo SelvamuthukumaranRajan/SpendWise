@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen>
         AnimationController(vsync: this, duration: const Duration(seconds: 6))
           ..repeat();
 
-    Future.delayed(const Duration(seconds: 10), () {
+    Future.delayed(const Duration(seconds: 6), () {
       if (mounted) {
         SplashService.checkAuthentication(context);
       }

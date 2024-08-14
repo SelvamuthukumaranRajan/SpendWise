@@ -6,7 +6,8 @@ class TransactionRepository {
   final Realm _realm;
 
   TransactionRepository()
-      : _realm = Realm(Configuration.local([TransactionModel.schema, UserModel.schema]));
+      : _realm = Realm(
+            Configuration.local([TransactionModel.schema, UserModel.schema]));
 
   double calculateTotal(bool isExpense) {
     final transactions = _realm
@@ -96,17 +97,35 @@ class TransactionRepository {
     });
   }
 
-  void logout(String email) {
-    final user = _realm.find<UserModel>(email);
-    if (user != null) {
-      _realm.write(() {
-        _realm.delete(user);
-      });
-    }
+  void logout() {
+    _realm.write(() {
+      _realm.deleteAll<TransactionModel>();
+      _realm.deleteAll<UserModel>();
+    });
   }
 
   bool isUserLoggedIn() {
     return _realm.all<UserModel>().toList().isNotEmpty;
+  }
+
+  UserModel getUserDetails() {
+    final users = _realm.all<UserModel>().toList();
+    if (users.isEmpty) {
+      throw Exception("No user found");
+    }
+    return users.first;
+  }
+
+  void updateBalance(String email, double amount) {
+    _realm.write(() {
+      final existingUser = _realm
+          .find<UserModel>(email); // Use primary key to find existing user
+      if (existingUser != null) {
+        existingUser.amount = amount;
+      } else {
+        throw Exception("User not found for update.");
+      }
+    });
   }
 
   void close() {

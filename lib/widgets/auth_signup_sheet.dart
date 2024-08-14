@@ -146,14 +146,13 @@ class _AuthSignupSheetState extends State<AuthSignupSheet> {
                             password: _passwordController.text,
                             balance: double.parse(_amountController.text)));
                         TransactionRepository().login(UserModel(
-                            _nameController.text,
                             _emailController.text,
+                            _nameController.text,
                             double.parse(_amountController.text)));
                         if (mounted) {
                           Navigator.pop(context, true);
                         }
-                      }
-                      else{
+                      } else {
                         if (mounted) {
                           Navigator.pop(context, false);
                         }

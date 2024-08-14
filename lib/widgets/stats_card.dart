@@ -15,13 +15,21 @@ class StatsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double progress =
-        double.parse(expense).round() / double.parse(balance).round();
-    if (progress < 0) {
-      progress = 0;
-    } else if (progress > 1) {
-      progress = 1;
+    double progress;
+    final expenseValue = double.parse(expense).round();
+    final balanceValue = double.parse(balance).round();
+
+    if (balanceValue == 0) {
+      progress = (expenseValue == 0) ? 0 : 1;
+    } else {
+      progress = expenseValue / balanceValue;
+      if (progress <= 0) {
+        progress = 0;
+      } else if (progress > 1) {
+        progress = 1;
+      }
     }
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(

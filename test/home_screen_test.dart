@@ -21,7 +21,7 @@ void main() {
       'HomeScreen displays CircularProgressIndicator when status is loading',
       (WidgetTester tester) async {
     // Arrange
-    when(mockHomeViewModel.status).thenReturn(1); // Loading status
+    when(mockHomeViewModel.status).thenReturn(Status.loading); // Loading status
 
     // Act
     await tester.pumpWidget(
@@ -40,7 +40,7 @@ void main() {
   testWidgets('HomeScreen displays error message when status is error',
       (WidgetTester tester) async {
     // Arrange
-    when(mockHomeViewModel.status).thenReturn(2); // Error status
+    when(mockHomeViewModel.status).thenReturn(Status.error); // Error status
 
     // Act
     await tester.pumpWidget(
@@ -59,7 +59,7 @@ void main() {
   testWidgets('HomeScreen displays content when status is success',
       (WidgetTester tester) async {
     // Arrange
-    when(mockHomeViewModel.status).thenReturn(3); // Success status
+    when(mockHomeViewModel.status).thenReturn(Status.success); // Success status
     when(mockHomeViewModel.totalExpense).thenReturn('5000');
     when(mockHomeViewModel.totalIncome).thenReturn('10000');
     when(mockHomeViewModel.transaction).thenReturn([]); // or mock transactions
@@ -85,7 +85,7 @@ void main() {
   testWidgets('FloatingActionButton triggers showModalBottomSheet on tap',
       (WidgetTester tester) async {
     // Arrange
-    when(mockHomeViewModel.status).thenReturn(3); // Success status
+    when(mockHomeViewModel.status).thenReturn(Status.success); // Success status
 
     // Act
     await tester.pumpWidget(

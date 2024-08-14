@@ -40,19 +40,19 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Consumer<HomeViewModel>(
             builder: (context, value, child) {
               switch (value.status) {
-                case 1:
+                case Status.loading:
                   return const Center(
                     child: CircularProgressIndicator(
                       color: Colors.grey,
                     ),
                   );
-                case 2:
+                case Status.error:
                   return const Center(
                     child: Text(
                       "Something went wrong!",
                     ),
                   );
-                case 3:
+                case Status.success:
                   return SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
                     child: Column(
@@ -63,43 +63,51 @@ class _HomeScreenState extends State<HomeScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               // Header Section
-                              Row(
-                                children: [
-                                  CircleAvatar(
-                                    radius: 25,
-                                    backgroundColor:
-                                        theme.colorScheme.primaryColor,
-                                    child: Icon(Icons.person_rounded,
-                                        color: theme.colorScheme.secondaryColor,
-                                        size: 30),
-                                  ),
-                                  const SizedBox(width: 12),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Hello Selva',
-                                        style: theme.textTheme.greetingsBold
-                                            .copyWith(
-                                          color: theme.colorScheme.textColor(),
+                              GestureDetector(
+                                onTap: () {
+                                  showLogoutDialog(context, theme, value);
+                                },
+                                child: Row(
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 25,
+                                      backgroundColor:
+                                          theme.colorScheme.primaryColor,
+                                      child: Icon(Icons.person_rounded,
+                                          color:
+                                              theme.colorScheme.secondaryColor,
+                                          size: 30),
+                                    ),
+                                    const SizedBox(width: 12),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Hello ${value.userName}',
+                                          style: theme.textTheme.greetingsBold
+                                              .copyWith(
+                                            color:
+                                                theme.colorScheme.textColor(),
+                                          ),
                                         ),
-                                      ),
-                                      Text(
-                                        'Good Morning',
-                                        style: theme.textTheme.greetingsNormal
-                                            .copyWith(
-                                          color: theme.colorScheme.textColor(),
+                                        Text(
+                                          value.getGreeting(),
+                                          style: theme.textTheme.greetingsNormal
+                                              .copyWith(
+                                            color:
+                                                theme.colorScheme.textColor(),
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                               const SizedBox(height: 20),
                               StatsCard(
                                 theme: theme,
-                                balance: "45000",
+                                balance: value.balance,
                                 expense: _homeViewModel.totalExpense,
                                 income: _homeViewModel.totalIncome,
                               ),
@@ -115,11 +123,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      'Top Spendings',
-                                      style: theme.textTheme.homeLabelBold
-                                          .copyWith(
-                                        color: theme.colorScheme.textColor(),
+                                    Expanded(
+                                      child: Text(
+                                        'Top Spendings',
+                                        style: theme.textTheme.homeLabelBold
+                                            .copyWith(
+                                          color:
+                                              theme.colorScheme.textColor(),
+                                        ),
                                       ),
                                     ),
                                     Icon(Icons.keyboard_arrow_right,
@@ -163,11 +174,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      'Recent Transactions',
-                                      style: theme.textTheme.homeLabelBold
-                                          .copyWith(
-                                        color: theme.colorScheme.textColor(),
+                                    Expanded(
+                                      child: Text(
+                                        'Recent Transactions',
+                                        style: theme.textTheme.homeLabelBold
+                                            .copyWith(
+                                          color:
+                                              theme.colorScheme.textColor(),
+                                        ),
                                       ),
                                     ),
                                     Text(
@@ -187,8 +201,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 itemCount: value.transaction.length,
                                 itemBuilder: (context, index) {
                                   return Dismissible(
-                                    key: Key(
-                                        value.transaction[index].id.toString()),
+                                    key: Key(value.transaction[index].id
+                                        .toString()),
                                     confirmDismiss: (direction) async {
                                       // Handle deletion logic
                                       print("Dismissible :$direction");
@@ -215,7 +229,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     .description
                                                     .toString(),
                                                 category: value
-                                                    .transaction[index].category
+                                                    .transaction[index]
+                                                    .category
                                                     .toString(),
                                                 amount: value
                                                     .transaction[index].amount
@@ -236,13 +251,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                             result['category']!,
                                             result['amount']!,
                                             result['isExpense'],
+                                            value.transaction[index].amount,
+                                            value
+                                                .transaction[index].isExpense,
                                           );
                                         }
 
                                         return false;
                                       } else {
                                         _homeViewModel.deleteTransaction(
-                                            value.transaction[index].id);
+                                            value.transaction[index].id,
+                                            value
+                                                .transaction[index].isExpense,
+                                            value.transaction[index].amount
+                                                .toString());
 
                                         return true;
                                       }
@@ -262,8 +284,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 16.0),
                                           child: Icon(Icons.delete,
-                                              color:
-                                                  Colors.white), // Delete icon
+                                              color: Colors
+                                                  .white), // Delete icon
                                         ),
                                       ),
                                     ),
@@ -292,8 +314,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       icon: _homeViewModel.getIcons(
                                           value.transaction[index].category),
                                       title: value.transaction[index].title,
-                                      subtitle:
-                                          value.transaction[index].description,
+                                      subtitle: value
+                                          .transaction[index].description,
                                       amount: value.transaction[index].amount
                                           .toString(),
                                       isExpense:
@@ -349,4 +371,45 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+}
+
+void showLogoutDialog(
+    BuildContext context, ThemeData theme, HomeViewModel homeViewModel) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        backgroundColor: theme.colorScheme.bgColor(),
+        title: Text(
+          'Logout',
+          style: theme.textTheme.transactionSheetLabelBold.copyWith(
+            color: theme.colorScheme.textColor(),
+          ),
+        ),
+        content: Text(
+          'Are you sure you want to log out?',
+          textAlign: TextAlign.start,
+          style: theme.textTheme.transactionDesc.copyWith(
+            color: theme.colorScheme.textColor(),
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(); // Close the dialog
+            },
+            child: Text('Cancel',
+                style: TextStyle(color: theme.colorScheme.textColor())),
+          ),
+          TextButton(
+            onPressed: () {
+              homeViewModel.logoutUser(context);
+            },
+            child: Text('Logout',
+                style: TextStyle(color: theme.colorScheme.textColor())),
+          ),
+        ],
+      );
+    },
+  );
 }

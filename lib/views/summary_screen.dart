@@ -137,6 +137,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
         final result = await showModalBottomSheet<String>(
           context: context,
           backgroundColor: Colors.transparent,
+          isScrollControlled: true,
           builder: (context) => SummaryFilterSheet(
             theme: theme,
             title: title,

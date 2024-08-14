@@ -16,7 +16,7 @@ dependencies:
   provider: ^6.1.2
 
   #Local Storage:
-  realm: ^3.4.0
+  realm: ^3.4.1
 
   #Notification:
   flutter_local_notifications: ^17.2.2
@@ -101,10 +101,6 @@ flutter:
     - ios/.symlinks/plugins/realm/android/src/gen/
     - ios/.symlinks/plugins/realm/android/src/main/
     - ios/.symlinks/plugins/realm/android/src/main/cpp/
-    - ios/.symlinks/plugins/realm/android/src/main/cpp/lib/
-    - ios/.symlinks/plugins/realm/android/src/main/cpp/lib/x86_64/
-    - ios/.symlinks/plugins/realm/android/src/main/cpp/lib/arm64-v8a/
-    - ios/.symlinks/plugins/realm/android/src/main/cpp/lib/armeabi-v7a/
     - ios/.symlinks/plugins/realm/android/src/main/java/
     - ios/.symlinks/plugins/realm/android/src/main/java/io/
     - ios/.symlinks/plugins/realm/android/src/main/java/io/realm/

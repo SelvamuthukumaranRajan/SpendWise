@@ -105,10 +105,13 @@ class _AuthSignInSheetState extends State<AuthSignInSheet> {
                           _emailController.text, _passwordController.text);
 
                       if (user != null) {
-                        final userModel = await authHelper.getUserDetails(user.uid);
+                        final userModel =
+                            await authHelper.getUserDetails(user.uid);
                         if (userModel != null) {
                           TransactionRepository().login(UserModel(
-                              userModel.name, userModel.email, userModel.balance));
+                              userModel.email,
+                              userModel.name,
+                              userModel.balance));
 
                           if (mounted) {
                             Navigator.pop(context, true);

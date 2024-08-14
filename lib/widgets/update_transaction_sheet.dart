@@ -195,7 +195,7 @@ class _UpdateTransactionSheetState extends State<UpdateTransactionSheet> {
                       Navigator.pop(context, {
                         'title': _titleController.text,
                         'description': _descController.text,
-                        'category': _categoryController.text,
+                        'category': _selectedCategory,
                         'amount': _amountController.text,
                         'isExpense': !isIncome
                       });

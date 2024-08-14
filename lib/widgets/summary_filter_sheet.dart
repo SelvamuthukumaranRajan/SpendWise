@@ -14,10 +14,10 @@ class SummaryFilterSheet extends StatefulWidget {
   });
 
   @override
-  _SummaryFilterSheetState createState() => _SummaryFilterSheetState();
+  SummaryFilterSheetState createState() => SummaryFilterSheetState();
 }
 
-class _SummaryFilterSheetState extends State<SummaryFilterSheet> {
+class SummaryFilterSheetState extends State<SummaryFilterSheet> {
   String? _selectedOption;
 
   @override
@@ -64,16 +64,7 @@ class _SummaryFilterSheetState extends State<SummaryFilterSheet> {
               ),
             ),
             const SizedBox(height: 16.0),
-            // ...widget.options.map((option) => _buildOptionRow(option)),
-            Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: widget.options.length,
-                itemBuilder: (context, index) {
-                  return _buildOptionRow(widget.options[index]);
-                },
-              ),
-            ),
+            ...widget.options.map((option) => _buildOptionRow(option)),
             const SizedBox(height: 28),
             Padding(
               padding: const EdgeInsets.only(bottom: 24, left: 16, right: 16),

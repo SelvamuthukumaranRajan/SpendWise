@@ -101,3 +101,48 @@ Flutter
 Provider
 Firebase
 Realm DB
+
+
+## Screenshots
+
+<h3>
+Dark Mode
+</h3>
+
+
+| Splash Screen                             | Auth Screen                             | Auth Screen                              |
+|-------------------------------------------|-----------------------------------------|------------------------------------------|
+| ![Screenshot](screenshots/SplashDark.png) | ![Screenshot](screenshots/AuthDark.png) | ![Screenshot](screenshots/LoginDark.png) |
+
+
+| Auth Screen                               | Home Screen                             | Home Screen                              |
+|-------------------------------------------|-----------------------------------------|------------------------------------------|
+| ![Screenshot](screenshots/SignupDark.png) | ![Screenshot](screenshots/HomeDark.png) | ![Screenshot](screenshots/Home2Dark.png) |
+
+
+| Summary Screen                             | Summary Screen                              | Summary Screen                              |
+|--------------------------------------------|---------------------------------------------|---------------------------------------------|
+| ![Screenshot](screenshots/SummaryDark.png) | ![Screenshot](screenshots/Summary2Dark.png) | ![Screenshot](screenshots/Summary3Dark.png) |
+
+<h3>
+Light Mode
+</h3>
+
+| Splash Screen                              | Auth Screen                              | Auth Screen                               |
+|--------------------------------------------|------------------------------------------|-------------------------------------------|
+| ![Screenshot](screenshots/SplashLight.png) | ![Screenshot](screenshots/AuthLight.png) | ![Screenshot](screenshots/LoginLight.png) |
+
+
+| Auth Screen                                | Home Screen                              | Home Screen                               |
+|--------------------------------------------|------------------------------------------|-------------------------------------------|
+| ![Screenshot](screenshots/SignupLight.png) | ![Screenshot](screenshots/HomeLight.png) | ![Screenshot](screenshots/Home2Light.png) |
+
+
+| Summary Screen                              | Summary Screen                               | Summary Screen                               |
+|---------------------------------------------|----------------------------------------------|----------------------------------------------|
+| ![Screenshot](screenshots/SummaryLight.png) | ![Screenshot](screenshots/Summary2Light.png) | ![Screenshot](screenshots/Summary3Light.png) |
+
+
+## ScreenRecordings
+
+Available in 'screenrecords' directory.
